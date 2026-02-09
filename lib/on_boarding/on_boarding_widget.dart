@@ -75,7 +75,7 @@ class _OnBoardingWidgetState extends State<OnBoardingWidget> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
-                            'Profile',
+                            'New Profile',
                             style: FlutterFlowTheme.of(context)
                                 .headlineLarge
                                 .override(
