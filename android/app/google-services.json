@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "508102047238",
+    "project_id": "to-do-app-angel-lucario-02ynib",
+    "storage_bucket": "to-do-app-angel-lucario-02ynib.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:508102047238:android:c67bfbdc695c0e5ed23587",
+        "android_client_info": {
+          "package_name": "com.mycompany.todoappangellucario"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBERrDSdyadWpXWu1tQFBOs4GP6B90hrsM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
