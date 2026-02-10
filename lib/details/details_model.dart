@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class DetailsModel extends FlutterFlowModel<DetailsWidget> {
   ///  Local state fields for this page.
 
-  bool editingmode = true;
+  bool editingmode = false;
 
   ///  State fields for stateful widgets in this page.
 

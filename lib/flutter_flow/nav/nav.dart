@@ -106,11 +106,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: DetailsWidget.routeName,
           path: DetailsWidget.routePath,
           asyncParams: {
-            'taskDOC': getDoc(['Task'], TaskRecord.fromSnapshot),
+            'taskDoc': getDoc(['Task'], TaskRecord.fromSnapshot),
           },
           builder: (context, params) => DetailsWidget(
-            taskDOC: params.getParam(
-              'taskDOC',
+            taskDoc: params.getParam(
+              'taskDoc',
               ParamType.Document,
             ),
           ),
