@@ -4,6 +4,7 @@ import '/components/add_task_widget.dart';
 import '/components/task_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'tasks_model.dart';
@@ -28,6 +29,8 @@ class _TasksWidgetState extends State<TasksWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => TasksModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -97,95 +100,121 @@ class _TasksWidgetState extends State<TasksWidget> {
         ),
         body: SafeArea(
           top: true,
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 24.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 0.0, 0.0),
-                  child: Text(
-                    'Tasks',
-                    style: FlutterFlowTheme.of(context).headlineMedium.override(
-                          font: GoogleFonts.inter(
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .headlineMedium
-                                .fontStyle,
-                          ),
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          fontSize: 18.0,
-                          letterSpacing: 0.0,
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FlutterFlowTheme.of(context)
-                              .headlineMedium
-                              .fontStyle,
-                        ),
-                  ),
-                ),
-                Expanded(
-                  child: StreamBuilder<List<TaskRecord>>(
-                    stream: queryTaskRecord(
-                      queryBuilder: (taskRecord) => taskRecord
-                          .where(
-                            'user',
-                            isEqualTo: currentUserReference,
-                          )
-                          .where(
-                            'completed',
-                            isEqualTo: false,
-                          ),
-                    ),
-                    builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
-                      if (!snapshot.hasData) {
-                        return Center(
-                          child: SizedBox(
-                            width: 50.0,
-                            height: 50.0,
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                FlutterFlowTheme.of(context).primary,
+          child: Align(
+            alignment: AlignmentDirectional(0.0, 0.0),
+            child: Container(
+              constraints: BoxConstraints(
+                maxWidth: 400.0,
+              ),
+              decoration: BoxDecoration(),
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 24.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 0.0, 0.0),
+                      child: Text(
+                        'Tasks',
+                        style: FlutterFlowTheme.of(context)
+                            .headlineMedium
+                            .override(
+                              font: GoogleFonts.inter(
+                                fontWeight: FontWeight.bold,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .headlineMedium
+                                    .fontStyle,
                               ),
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              fontSize: 18.0,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .headlineMedium
+                                  .fontStyle,
                             ),
-                          ),
-                        );
-                      }
-                      List<TaskRecord> listViewTaskRecordList = snapshot.data!;
+                      ),
+                    ),
+                    Expanded(
+                      child: StreamBuilder<List<TaskRecord>>(
+                        stream: queryTaskRecord(
+                          queryBuilder: (taskRecord) => taskRecord
+                              .where(
+                                'user',
+                                isEqualTo: currentUserReference,
+                              )
+                              .where(
+                                'completed',
+                                isEqualTo: false,
+                              ),
+                        ),
+                        builder: (context, snapshot) {
+                          // Customize what your widget looks like when it's loading.
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: SizedBox(
+                                width: 50.0,
+                                height: 50.0,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    FlutterFlowTheme.of(context).primary,
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                          List<TaskRecord> listViewTaskRecordList =
+                              snapshot.data!;
 
-                      return ListView.separated(
-                        padding: EdgeInsets.zero,
-                        scrollDirection: Axis.vertical,
-                        itemCount: listViewTaskRecordList.length,
-                        separatorBuilder: (_, __) => SizedBox(height: 12.0),
-                        itemBuilder: (context, listViewIndex) {
-                          final listViewTaskRecord =
-                              listViewTaskRecordList[listViewIndex];
-                          return InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              await listViewTaskRecord.reference
-                                  .update(createTaskRecordData(
-                                completed: true,
-                              ));
+                          return ListView.separated(
+                            padding: EdgeInsets.zero,
+                            scrollDirection: Axis.vertical,
+                            itemCount: listViewTaskRecordList.length,
+                            separatorBuilder: (_, __) => SizedBox(height: 12.0),
+                            itemBuilder: (context, listViewIndex) {
+                              final listViewTaskRecord =
+                                  listViewTaskRecordList[listViewIndex];
+                              return InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  context.pushNamed(
+                                    DetailsWidget.routeName,
+                                    queryParameters: {
+                                      'taskDoc': serializeParam(
+                                        listViewTaskRecord,
+                                        ParamType.Document,
+                                      ),
+                                    }.withoutNulls,
+                                    extra: <String, dynamic>{
+                                      'taskDoc': listViewTaskRecord,
+                                    },
+                                  );
+                                },
+                                child: TaskWidget(
+                                  key: Key(
+                                      'Key39x_${listViewIndex}_of_${listViewTaskRecordList.length}'),
+                                  tasksDoc: listViewTaskRecord,
+                                  checkAction: () async {
+                                    await listViewTaskRecord.reference
+                                        .update(createTaskRecordData(
+                                      completed: true,
+                                    ));
+                                  },
+                                ),
+                              );
                             },
-                            child: TaskWidget(
-                              key: Key(
-                                  'Key39x_${listViewIndex}_of_${listViewTaskRecordList.length}'),
-                              tasksDoc: listViewTaskRecord,
-                              checkAction: () async {},
-                            ),
                           );
                         },
-                      );
-                    },
-                  ),
+                      ),
+                    ),
+                  ].divide(SizedBox(height: 12.0)),
                 ),
-              ].divide(SizedBox(height: 12.0)),
+              ),
             ),
           ),
         ),
